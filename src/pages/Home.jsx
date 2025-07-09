@@ -17,7 +17,88 @@ import Logement3 from "../assets/logementpage5.png";
 import Footer from "../components/Footer";
 import CommentCard from "../components/CommentCard";
 import MiniSlide from "../components/Carousel";
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
+const ImageCarousel = () => {
+  const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 3000,
+  nextArrow: <SampleArrow direction="next" />,
+  prevArrow: <SampleArrow direction="prev" />,
+  responsive: [
+    {
+      breakpoint: 992,
+      settings: {
+        slidesToShow: 2,
+        arrows: false
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 1,
+        arrows: false
+      }
+    }
+  ]
+};
+
+  const images = [Logis1, Logis2, Logis3, Logis4, Logis5, Logis6];
+
+  return (
+    <div className="my-5" data-aos="fade-up">
+      <Slider {...settings}>
+        {images.map((img, index) => (
+          <div key={index} className="px-2">
+            <img
+              src={img}
+              alt={`Logement ${index + 1}`}
+              style={{ 
+                height: '30rem',
+                width: '100%',
+                objectFit: 'cover',
+                borderRadius: '8px',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+              }}
+            />
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
+};
+const SampleArrow = ({ onClick, direction }) => (
+  <button 
+    onClick={onClick}
+    style={{
+      position: 'absolute',
+      top: '50%',
+      [direction === 'prev' ? 'left' : 'right']: '15px',
+      transform: 'translateY(-50%)',
+      zIndex: 1,
+      background: 'rgba(255, 193, 7, 0.8)',
+      border: 'none',
+      borderRadius: '50%',
+      width: '40px',
+      height: '40px',
+      color: 'white',
+      fontSize: '20px',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}
+  >
+    {direction === 'prev' ? '◄' : '►'}
+  </button>
+);
 
 function Home() {
   return (
@@ -26,9 +107,10 @@ function Home() {
         <Navbar />
         <HeaderImg />
       </Container>
-      <Container fluid className="my-5">
-        <h2 className="fw-medium display-5 my-5 text-warning" data-aos="zoom-in">
-          AVANTAGES
+      <Container className="d-flex flex-column align-items-center my-5">
+        <Container fluid className="my-5">
+        <h2 className="fw-bold display-4 text-center mb-5" data-aos="zoom-in">
+          <span className="text-warning">AVANTAGES</span>
         </h2>
         <Row>
           <Col xs={12} md={4}>
@@ -61,99 +143,59 @@ function Home() {
         </Row>
       </Container>
       <Container fluid className="my-5">
-        <h2 className="fw-medium display-5 my-5 text-warning" data-aos="zoom-in">
-          LOGEMENTS POPULAIRES
+        <h2 className="fw-bold display-4 text-center mb-5" data-aos="zoom-in">
+          <span className="text-warning">GALERIE DE LOGEMENTS</span> 
         </h2>
-        <Row className="mb-3 gy-3 h-100">
-          <Col xs={12} md={4}>
-            <img
-              src={Logis1}
-              alt=""
-              className="img-fluid w-80"
-              data-aos="fade-up"
-              data-aos-delay={0}
-            />
-          </Col>
-          <Col xs={12} md={4}>
-            <img 
-            src={Logis2} 
-            alt="" 
-            className="img-fluid w-80" 
-              data-aos="fade-up"
-              data-aos-delay={200}
-            />
-          </Col>
-          <Col xs={12} md={4}>
-            <img 
-            src={Logis3} 
-            alt="" 
-            className="img-fluid w-80" 
-              data-aos="fade-up"
-              data-aos-delay={400}
-            />
+        <ImageCarousel />
+      </Container>
+      <Container fluid className="my-5 py-4 bg-light">
+        <h2 className="fw-bold display-4 text-center mb-5" data-aos="zoom-in">
+          <span className="text-warning">TÉMOIGNAGES</span> DE NOS CLIENTS
+        </h2>
+  
+        <Row className="g-4 justify-content-center">
+          <Col xs={12} md={6} lg={3} data-aos="fade-up" data-aos-delay="100">
+            <div className="h-100 d-flex flex-column">
+              <CommentCard 
+                imgprofile={Logement1}
+                namecomment="Sarah Dupont"
+                content="Service exceptionnel ! J'ai trouvé mon logement idéal en moins d'une semaine."
+                className="shadow-lg flex-grow-1"
+              />
+            </div>
           </Col>
 
-          <Col xs={12} md={4}>
-            <img 
-            src={Logis4} 
-            alt="" 
-            className="img-fluid w-80" 
-              data-aos="fade-up"
-              data-aos-delay={600}
-            />
+          <Col xs={12} md={6} lg={3} data-aos="fade-up" data-aos-delay="200">
+            <div className="h-100 d-flex flex-column">
+              <CommentCard 
+                imgprofile={Logement2}
+                namecomment="Pierre Martin"
+                content="Transparence des prix appréciable. Aucun frais caché, je recommande !"
+                className="shadow-lg flex-grow-1 bg-white" 
+              />
+            </div>
           </Col>
-          <Col xs={12} md={4}>
-            <img 
-            src={Logis5} 
-            alt="" 
-            className="img-fluid w-80" 
-              data-aos="fade-up"
-              data-aos-delay={800}
-            />
+
+          <Col xs={12} md={6} lg={3} data-aos="fade-up" data-aos-delay="300">
+            <div className="h-100 d-flex flex-column">
+              <CommentCard 
+                imgprofile={Logement2}
+                namecomment="Emma Leroy"
+                content="Les photos correspondent parfaitement à la réalité. Très professionnel."
+                className="shadow-lg flex-grow-1 border-top border-4 border-warning"
+              />
+            </div>
           </Col>
-          <Col xs={12} md={4}>
-            <img 
-            src={Logis6} 
-            alt="" 
-            className="img-fluid w-80" 
-              data-aos="fade-up"
-              data-aos-delay={1000}
-            />
-          </Col>
-        </Row>
-      </Container>
-      <Container fluid className="my-5">
-        <h2 className="fw-medium display-5 my-5 text-warning" data-aos="zoom-in">
-          TEMOIGNAGES
-        </h2>
-        <Row className="d-flex h-100 align-items-stretch">
-          <Col xs={12} md={3} className="h-100">
-            <CommentCard 
-              imgprofile={Logement1} 
-              namecomment="Mark Aurel" 
-              content="Tres belle initiative pour l'innovation de la technologie  "
-            />
-          </Col>
-          <Col xs={12} md={3} className="h-100">
-            <CommentCard 
-              imgprofile={Logement2} 
-              namecomment="Mark Elias" 
-              content="Lorem ipsum dolor, sit amet consectetur adipisicing elit."
-            />
-          </Col>
-          <Col xs={12} md={3}>
-            <CommentCard 
-              imgprofile={Logement2} 
-              namecomment="Mark Camp" 
-              content="Lorem ipsum dolor, sit amet consectetur adipisicing elit."  
-            />
-          </Col>
-          <Col xs={12} md={3}>
-            <CommentCard 
-              imgprofile={Logement3} 
-              namecomment="Mark Jerem" 
-              content="Lorem ipsum dolor, sit amet consectetur adipisicing elit."  
-            />
+
+          <Col xs={12} md={6} lg={3} data-aos="fade-up" data-aos-delay="400">
+            <div className="h-100 d-flex flex-column">
+              <CommentCard 
+                imgprofile={Logement3}
+                namecomment="Thomas Moreau"
+                content="L'équipe m'a accompagné à chaque étape. Un sans-faute !"
+                className="shadow-lg flex-grow-1 bg-gradient-light"
+              />
+            </div>
           </Col>
         </Row>
       </Container>
@@ -169,6 +211,7 @@ function Home() {
             <MiniSlide/>
           </Col>
         </Row>
+      </Container>
       </Container>
       <Container fluid className="mt-5">
         <Row className="align-items-stretch">
